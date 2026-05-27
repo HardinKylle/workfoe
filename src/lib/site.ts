@@ -1,10 +1,17 @@
 export type SiteSection = {
   title: string;
-  href: string;
+  href: SiteSectionHref;
   description: string;
   intro: string;
   items: string[];
 };
+
+export type SiteSectionHref =
+  | "/learn"
+  | "/playbooks"
+  | "/tools"
+  | "/stacks"
+  | "/templates";
 
 export const siteSections: SiteSection[] = [
   {
@@ -52,7 +59,7 @@ export const siteSections: SiteSection[] = [
   },
 ];
 
-export function getSiteSection(href: string) {
+export function getSiteSection(href: SiteSectionHref) {
   const section = siteSections.find((item) => item.href === href);
 
   if (!section) {

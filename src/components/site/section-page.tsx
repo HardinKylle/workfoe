@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/site/site-header";
+import { getContentItemsForSection } from "@/content/items";
 import type { SiteSection } from "@/lib/site";
 
 type SectionPageProps = {
@@ -6,6 +7,8 @@ type SectionPageProps = {
 };
 
 export function SectionPage({ section }: SectionPageProps) {
+  const contentItems = getContentItemsForSection(section.href);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 py-8 sm:px-10 lg:px-12">
@@ -28,11 +31,19 @@ export function SectionPage({ section }: SectionPageProps) {
             Starting points
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {section.items.map((item) => (
-              <article key={item} className="rounded-lg border p-5">
-                <h3 className="text-sm font-semibold">{item}</h3>
+            {contentItems.map((item) => (
+              <article key={item.title} className="rounded-lg border p-5">
+                <div className="mb-4 flex flex-wrap gap-2 text-xs text-muted-foreground">
+                  <span className="rounded-md border px-2 py-1 capitalize">
+                    {item.kind}
+                  </span>
+                  <span className="rounded-md border px-2 py-1 capitalize">
+                    {item.status}
+                  </span>
+                </div>
+                <h3 className="text-sm font-semibold">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                  Placeholder content for the first version.
+                  {item.description}
                 </p>
               </article>
             ))}
